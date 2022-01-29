@@ -13,6 +13,7 @@ def lignes(sudo, erreur):
                 bon.remove(sudo[i][j])
             elif sudo[i][j] != 0 :
                 faux.append((i, j))
+                print(sudo[i][j])
                 erreur += 1
     if len(faux) != 0 :
         print(f'Il y a des erreurs aux coordonnées: {faux}')
@@ -93,6 +94,9 @@ def cases_vides(sudo) :
 def correct(sudo, erreur, nb_0) :
     if (nb_0!=0) and (erreur != 0) :
         print("Attention ! Ce sudoku n'est pas complété")
+    
+    if (nb_0!=0) and (erreur == 0) :
+        print("Attention ! Ce sudoku est bon mais il n'est pas complété")
 
     elif (nb_0 == 0) and (erreur != 0) :
         print(f"Quasiment ! Ce sudoku est rempli mais avec {erreur} erreur(s)")
@@ -101,16 +105,63 @@ def correct(sudo, erreur, nb_0) :
         print("Bravo ! Ce sudoku est correct")
     return erreur
 
+def detail_erreur(list_error) : 
+    for i in range(len(list_error)) :
+        print(list_error[i])
+
+def possibilite(sudo) :
+    DETAIL = 'n'
+    MIN = 'y'
+    nb_time = [[1, 0], [2, 0],[3, 0],[4, 0],[5, 0],[6, 0],[7, 0],[8, 0],[9, 0]]
+    recap = []
+    if DETAIL == 'y' :
+        for i in range(9) :
+            for j in range(9) :
+                if sudo[i][j] == 0 :
+                    poss = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+                    for k in range(9) :
+                        if sudo[i][k] in poss :
+                            poss.remove(sudo[i][k])
+                        if sudo[k][j] in poss :
+                            poss.remove(sudo[k][j])
+                    print(f'la case de position {i} : {j} peut prendre comme valeur {poss}')
+    if DETAIL == 'n' :
+        for i in range(9) :
+            for j in range(9) :
+                if sudo[i][j] == 0 :
+                    poss = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+                    for k in range(9) :
+                        if sudo[i][k] in poss :
+                            poss.remove(sudo[i][k])
+                        if sudo[k][j] in poss :
+                            poss.remove(sudo[k][j])
+                    recap.append(f'{i} : {j} -> {poss}')
+                    if MIN == 'y' :
+                        for w in range(len(nb_time)) :
+                            if nb_time[w][0] in poss :
+                                nb_time[w][1]  += 1
+        if MIN == 'n' :
+            for y in range(len(recap)) :
+                print(recap[y])
+        if MIN == 'y' :
+            for z in range(len(nb_time)) :
+                print(f'{nb_time[z][0]} peu être mis {nb_time[z][1]} fois')
+
+
+
+    
+
+
 sudo = [
-    [1, 0, 0, 2, 0, 0, 3, 0, 0],
-    [0, 1, 0, 0, 2, 0, 0, 3, 0],
-    [0, 4, 0, 0, 0, 0, 0, 0, 0],
-    [4, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 4, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    [0, 0, 9, 0, 0, 0, 0, 0, 0],
+    [0, 2, 0, 0, 8, 3, 0, 0, 0],
+    [0, 5, 0, 4, 0, 0, 0, 0, 0],
+    [0, 0, 0, 8, 4, 0, 1, 5, 0],
+    [6, 0, 0, 0, 9, 0, 0, 0, 0],
+    [0, 1, 0, 0, 0, 2, 0, 0, 7],
+    [0, 6, 0, 0, 0, 0, 0, 7, 0],
+    [0, 0, 0, 5, 0, 9, 0, 4, 3],
+    [0, 0, 3, 2, 0, 0, 0, 0, 9]
 ]
 erreur = 0
 list_error = []
@@ -125,15 +176,25 @@ erreur = carres(sudo, erreur)
 list_error.append(f'Carrés       : {erreur} erreur(s)')
 erreur = incoherances(sudo,erreur)
 list_error.append(f'Incoherances : {erreur} erreur(s)')
-
-for i in range(len(list_error)) :
-    print(list_error[i])
-
+detail_erreur(list_error)
 nb_0 = cases_vides(sudo)
 erreur = correct(sudo, erreur, nb_0)
+possibilite(sudo)
 
+'''
+sudo = [
+    [0, 0, 9, 0, 0, 0, 0, 0, 0],
+    [0, 2, 0, 0, 8, 3, 0, 0, 0],
+    [0, 5, 0, 4, 0, 0, 0, 0, 0],
+    [0, 0, 0, 8, 4, 0, 1, 5, 0],
+    [6, 0, 0, 0, 9, 0, 0, 0, 0],
+    [0, 1, 0, 0, 0, 2, 0, 0, 7],
+    [0, 6, 0, 0, 0, 0, 0, 7, 0],
+    [0, 0, 0, 5, 0, 9, 0, 4, 3],
+    [0, 0, 3, 2, 0, 0, 0, 0, 9]
+]
 
-
+'''
 
 
 
