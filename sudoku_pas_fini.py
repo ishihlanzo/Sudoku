@@ -13,9 +13,9 @@ sudo = [
 erreur = 0
 
 # Afficher la grille
-
-for i in range(len(sudo)):
-    print(sudo[i])
+def affichage(sudo) :
+    for i in range(len(sudo)):
+        print(sudo[i])
 
 # Vérifie s'il n'y a pas 2 fois le même chiffre dans une ligne, (hormis 0)
 def lignes(sudo, erreur):
@@ -29,9 +29,8 @@ def lignes(sudo, erreur):
                 faux.append((i, j))
                 erreur += 1
     if len(faux) != 0 :
-        print(f'Il y a des erreurs aux coordonnées: {faux}, ce qui fait un total de {erreur} erreurs')
-    else : 
-        print(f'erreur : {erreur}')
+        print(f'Il y a des erreurs aux coordonnées: {faux}')
+    print(f'erreur : {erreur}')
     return erreur
     
 # Vérifie s'il n'y a pas 2 fois le même chiffre dans une colonne (hormis 0)
@@ -46,9 +45,8 @@ def colonnes(sudo, erreur) :
                 faux.append((i, j))
                 erreur += 1
     if len(faux) != 0 :
-        print(f'Il y a des erreurs aux coordonnées: {faux}, ce qui fait un total de {erreur} erreurs')
-    else : 
-        print(f'erreur : {erreur}')
+        print(f'Il y a des erreurs aux coordonnées: {faux}')
+    print(f'erreur : {erreur}')
     return erreur
 
 # Vérifie les carrés de 3 par 3
@@ -66,9 +64,8 @@ def carres(sudo, erreur) :
                         erreur_c.append((int(x/3), int(y/3)))
                         erreur += 1
     if len(erreur_c) != 0 :
-        print(f'Il y a des erreurs dans les carrés de coordonnées suivantes: {erreur_c}, ce qui fait un total de {erreur} erreurs')
-    else : 
-        print(f'erreur : {erreur}')
+        print(f'Il y a des erreurs dans les carrés de coordonnées suivantes: {erreur_c}')
+    print(f'erreur : {erreur}')
     return erreur
 
 # Vérifie s'il n'y a aucune incohérence 
@@ -82,51 +79,57 @@ def incoherances(sudo, erreur) :
                 erreur += 1
     if len(incoherances) != 0 :
         print(f'Il y a des incohérances au coordonnées suivantes: {incoherances}')
-    else :
-        print(f'erreur : {erreur}')
+    print(f'erreur : {erreur}')
     return erreur
 
-# Vérifie si le sudoku est bon
-def correct(sudo, erreur) :
-    if (0 in sudo[i]) and (erreur != 0) :
-        return "Attention ! Ce sudoku n'est pas complété"
 
-    elif (0 not in sudo[i]) and (erreur != 0) :
-        print(f"Quasiment ! Ce sudoku est rempli mais avec {erreur} erreur(s)")
 
-    elif (0 not in sudo[i]) and (erreur == 0) :
-        print("Bravo ! Ce sudoku est correct")
-    return erreur
+
 # Dicte les cases n'ayant pas de valeur 
 def cases_vides(sudo) :
     coo_cases_vides = []
-    longue = 'n'
+    DETAIL = 'n'
     nb_0 = 0
     for i in range(9) :
-        if longue == 'y' :
+        if DETAIL == 'y' :
             for j in range(9) :
                 if sudo[j][i] == 0 :
                     coo_cases_vides.append((i+1, j+1))
-        elif longue == 'n' :
+                    nb_0 += 1
+        elif DETAIL == 'n' :
             for j in range(9) :
                 if sudo[j][i] == 0 :
                     nb_0 += 1
-    if nb_0 != 0 :
+    if DETAIL == 'n' :
         print(f"Il y a {nb_0} cases vides dans votre sudoku")
-
-    if coo_cases_vides != 0 :
-
+    if DETAIL == 'y' :
         print(f'Les cases de coordonnées suivantes sont vides: {coo_cases_vides}')
+    return nb_0
+
+# Vérifie si le sudoku est bon
+def correct(sudo, erreur, nb_0) :
+    if (nb_0!=0) and (erreur != 0) :
+        print("Attention ! Ce sudoku n'est pas complété")
+
+    elif (nb_0 == 0) and (erreur != 0) :
+        print(f"Quasiment ! Ce sudoku est rempli mais avec {erreur} erreur(s)")
+
+    elif (nb_0 == 0) and (erreur == 0) :
+        print("Bravo ! Ce sudoku est correct")
+    return erreur
+
 
 erreur = lignes(sudo, erreur)
 erreur = colonnes(sudo, erreur)
 erreur = carres(sudo, erreur)
 erreur = incoherances(sudo,erreur)
-erreur = correct(sudo, erreur)
+nb_0 = cases_vides(sudo)
+erreur = correct(sudo, erreur, nb_0)
 
-cases_vides(sudo)
 
-print(erreur)
+
+
+
 
 
 
