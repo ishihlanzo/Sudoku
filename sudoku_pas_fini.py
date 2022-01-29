@@ -115,7 +115,7 @@ def detail_erreur(list_error) :
 def possibilite(sudo, good) :
     if good == False :
         DETAIL = 'n'
-        MIN = 'y'
+        MIN = 'n'
         nb_time = [[1, 0], [2, 0],[3, 0],[4, 0],[5, 0],[6, 0],[7, 0],[8, 0],[9, 0]]
         recap = []
         if DETAIL == 'y' :
@@ -128,6 +128,24 @@ def possibilite(sudo, good) :
                                 poss.remove(sudo[i][k])
                             if sudo[k][j] in poss :
                                 poss.remove(sudo[k][j])
+                            cox = 0
+                            coy = 0
+                            if 0<= i and i < 3 :
+                                cox = 0
+                            if 3<= i and i < 6 :
+                                cox = 3
+                            if 6<= i and  i < 9 :
+                                cox = 6
+                            if 0<= j and j < 3 :
+                                coy = 0
+                            if 3<= j and j < 6 :
+                                coy = 3
+                            if 6<= j and j < 9 :
+                                coy = 6
+                            for a in range(coy , coy+3) :
+                                for b in range(cox, cox+3) :
+                                    if sudo[a][b] in poss :
+                                        poss.remove(sudo[a][b])
                         print(f'la case de position {i} : {j} peut prendre comme valeur {poss}')
         if DETAIL == 'n' :
             for i in range(9) :
@@ -139,6 +157,26 @@ def possibilite(sudo, good) :
                                 poss.remove(sudo[i][k])
                             if sudo[k][j] in poss :
                                 poss.remove(sudo[k][j])
+                            cox = 0
+                            coy = 0
+                            if 0<= i and i < 3 :
+                                cox = 0
+                            if 3<= i and i < 6 :
+                                cox = 3
+                            if 6<= i and  i < 9 :
+                                cox = 6
+                            if 0<= j and j < 3 :
+                                coy = 0
+                            if 3<= j and j < 6 :
+                                coy = 3
+                            if 6<= j and j < 9 :
+                                coy = 6
+                            for a in range(coy , coy+3) :
+                                for b in range(cox, cox+3) :
+                                    if sudo[a][b] in poss :
+                                        poss.remove(sudo[a][b])
+
+
                         recap.append(f'{i} : {j} -> {poss}')
                         if MIN == 'y' :
                             for w in range(len(nb_time)) :
@@ -158,15 +196,15 @@ def possibilite(sudo, good) :
 
 
 sudo = [
-    [8, 3, 9, 7, 5, 6, 4, 2, 1],
-    [1, 2, 4, 9, 8, 3, 7, 6, 5],
-    [7, 5, 6, 4, 2, 1, 3, 9, 8],
-    [3, 9, 2, 8, 4, 7, 1, 5, 6],
-    [6, 8, 7, 1, 9, 5, 2, 3, 4],
-    [4, 1, 5, 6, 3, 2, 9, 8, 7],
-    [9, 6, 8, 3, 1, 4, 5, 7, 2],
-    [2, 7, 1, 5, 6, 9, 8, 4, 3],
-    [5, 4, 3, 2, 7, 8, 6, 1, 9]
+    [0, 0, 9, 0, 0, 0, 0, 0, 0],
+    [0, 2, 0, 0, 8, 3, 0, 0, 0],
+    [0, 5, 0, 4, 0, 0, 0, 0, 0],
+    [0, 0, 0, 8, 4, 0, 1, 5, 0],
+    [6, 0, 0, 0, 9, 0, 0, 0, 0],
+    [0, 1, 0, 0, 0, 2, 0, 0, 7],
+    [0, 6, 0, 0, 0, 0, 0, 7, 0],
+    [0, 0, 0, 5, 0, 9, 0, 4, 3],
+    [0, 0, 3, 2, 0, 0, 0, 0, 9]
 ]
 erreur = 0
 list_error = []
