@@ -157,25 +157,8 @@ def possibilite(sudo, good) :
                                 poss.remove(sudo[i][k])
                             if sudo[k][j] in poss :
                                 poss.remove(sudo[k][j])
-                            cox = 0
-                            coy = 0
-                            if 0<= i and i < 3 :
-                                cox = 0
-                            if 3<= i and i < 6 :
-                                cox = 3
-                            if 6<= i and  i < 9 :
-                                cox = 6
-                            if 0<= j and j < 3 :
-                                coy = 0
-                            if 3<= j and j < 6 :
-                                coy = 3
-                            if 6<= j and j < 9 :
-                                coy = 6
-                            for a in range(coy , coy+3) :
-                                for b in range(cox, cox+3) :
-                                    if sudo[a][b] in poss :
-                                        poss.remove(sudo[a][b])
-
+                        
+                        
 
                         recap.append(f'{i} : {j} -> {poss}')
                         if MIN == 'y' :
