@@ -96,7 +96,7 @@ def correct(sudo, erreur, nb_0) :
     if (nb_0!=0) and (erreur != 0) :
         print("Attention ! Ce sudoku n'est pas complété")
         return erreur, resultator
-    if (nb_0!=0) and (erreur == 0) :
+    if (nb_0 != 0) and (erreur == 0) :
         print("Attention ! Ce sudoku est bon mais il n'est pas complété")
         return erreur, resultator
     elif (nb_0 == 0) and (erreur != 0) :
@@ -115,7 +115,7 @@ def detail_erreur(list_error) :
 def possibilite(sudo, good) :
     if good == False :
         DETAIL = 'n'
-        MIN = 'n'
+        MIN = 'y'
         nb_time = [[1, 0], [2, 0],[3, 0],[4, 0],[5, 0],[6, 0],[7, 0],[8, 0],[9, 0]]
         recap = []
         if DETAIL == 'y' :
@@ -128,24 +128,25 @@ def possibilite(sudo, good) :
                                 poss.remove(sudo[i][k])
                             if sudo[k][j] in poss :
                                 poss.remove(sudo[k][j])
+                        if 0 <= i < 3 :
                             cox = 0
+                        if 3 <= i < 6 :
+                            cox = 3
+                        if 6 <= i < 9 :
+                            cox = 6
+                        if 0 <= j < 3 :
                             coy = 0
-                            if 0<= i and i < 3 :
-                                cox = 0
-                            if 3<= i and i < 6 :
-                                cox = 3
-                            if 6<= i and  i < 9 :
-                                cox = 6
-                            if 0<= j and j < 3 :
-                                coy = 0
-                            if 3<= j and j < 6 :
-                                coy = 3
-                            if 6<= j and j < 9 :
-                                coy = 6
-                            for a in range(coy , coy+3) :
-                                for b in range(cox, cox+3) :
-                                    if sudo[a][b] in poss :
-                                        poss.remove(sudo[a][b])
+                        if 3 <= j < 6 :
+                            coy = 3
+                        if 6 <= j < 9 :
+                            coy = 6
+                        for w in range(3) :
+                            for h in range(3) :
+                                if  sudo[w+cox][h+coy] in poss :
+                                    poss.remove(sudo[w+cox][h+coy])
+
+
+
                         print(f'la case de position {i} : {j} peut prendre comme valeur {poss}')
         if DETAIL == 'n' :
             for i in range(9) :
@@ -157,6 +158,22 @@ def possibilite(sudo, good) :
                                 poss.remove(sudo[i][k])
                             if sudo[k][j] in poss :
                                 poss.remove(sudo[k][j])
+                            if 0 <= i < 3 :
+                                cox = 0
+                            if 3 <= i < 6 :
+                                cox = 3
+                            if 6 <= i < 9 :
+                                cox = 6
+                            if 0 <= j < 3 :
+                                coy = 0
+                            if 3 <= j < 6 :
+                                coy = 3
+                            if 6 <= j < 9 :
+                                coy = 6
+                            for w in range(3) :
+                                for h in range(3) :
+                                    if  sudo[w+cox][h+coy] in poss :
+                                        poss.remove(sudo[w+cox][h+coy])
                         
                         
 
@@ -179,7 +196,7 @@ def possibilite(sudo, good) :
 
 
 sudo = [
-    [0, 0, 9, 0, 0, 0, 0, 0, 0],
+    [2, 0, 9, 0, 0, 0, 0, 0, 0],
     [0, 2, 0, 0, 8, 3, 0, 0, 0],
     [0, 5, 0, 4, 0, 0, 0, 0, 0],
     [0, 0, 0, 8, 4, 0, 1, 5, 0],
